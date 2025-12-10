@@ -1,6 +1,6 @@
 "use strict";
 
-function Book(title, author, read) {
+function Book(title, author, read = "unread") {
     this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
@@ -9,6 +9,7 @@ function Book(title, author, read) {
 
 function addBookToPage(array) {
     const parentElement = document.querySelector("#bookSection");
+
     while (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
     }
@@ -38,10 +39,7 @@ function addBookToPage(array) {
         
         const parentDiv = document.querySelector("#bookSection");
         parentDiv.appendChild(newDiv);
-
     }
-
-    console.log(myLibrary);
 }
 
 function addBookToLibrary(title, author, read) {
@@ -59,22 +57,51 @@ function removeBook(array, dataAtt) {
     return newLibrary;
 }
 
+function changeStatus(array, dataAtt) {
+
+    if (array.find((obj) => obj.id == dataAtt && obj.read == "read")) {
+        Object.assign(
+            array.find((obj) => obj.id == dataAtt),
+
+            {
+                read: "unread"
+            }
+        )
+    } else {
+        Object.assign(
+            array.find((obj) => obj.id == dataAtt),
+
+            {
+                read: "read"
+            }
+        )
+    }
+
+
+    addBookToPage(array)
+}
+
 let myLibrary = [];
 
-addBookToLibrary("Moby-Dick", "Herman Melville", "read");
-addBookToLibrary("Homo Faber", "Max Frisch", "unread");
+addBookToLibrary("Moby-Dick", "Herman Melville", "unread");
+addBookToLibrary("Homo Faber", "Max Frisch", "read");
 
 const dialog = document.querySelector("dialog");
 const showDialog = document.querySelector("button");
 const closeDialog = document.querySelector("dialog button");
-const removeButton = document.querySelector("#bookSection");
+const bookElement = document.querySelector("#bookSection");
 
-removeButton.addEventListener("click", (e) => {
-    if (e.target.nodeName == "BUTTON") {
+bookElement.addEventListener("click", (e) => {
+    
+    if (e.target.nodeName == "BUTTON" && e.target.innerText == "Remove Book") {
         
         myLibrary = removeBook(myLibrary, e.target.parentElement.dataset.bookId);
 
         addBookToPage(myLibrary);
+    }
+
+    if (e.target.nodeName == "BUTTON" && e.target.innerText == "Change read status") {
+        changeStatus(myLibrary, e.target.parentElement.dataset.bookId);
     }
 })
 
