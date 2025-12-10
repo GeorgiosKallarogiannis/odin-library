@@ -1,9 +1,14 @@
-body {
-    display: flex;
-    gap: 0.5rem;
+button {
+    margin-bottom: 0.5rem;
 }
 
-div {
+div#bookSection {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+div:not(#bookSection) {
     width: 200px;
     height: 300px;
     border: 1px solid black;
