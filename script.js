@@ -23,6 +23,7 @@ function addBookToPage(array) {
     const newDiv = document.createElement("div");
     const lineBreakOne = document.createElement("br");
     const lineBreakTwo = document.createElement("br");
+    const lineBreakThree = document.createElement("br");
     const remBtn = document.createElement("button");
     const readBtn = document.createElement("button");
     readBtn.classList.add("change-state");
@@ -30,6 +31,8 @@ function addBookToPage(array) {
     const bookInformation = document.createTextNode(
       `${array[i].title} by ${array[i].author}`
     );
+
+    const bookPages = document.createTextNode(`Pages: ${array[i].pageNumber}`);
 
     const read = array[i].read ? "Read" : "Unread";
 
@@ -39,8 +42,10 @@ function addBookToPage(array) {
 
     newDiv.appendChild(bookInformation);
     newDiv.appendChild(lineBreakOne);
-    newDiv.appendChild(readStatus);
+    newDiv.appendChild(bookPages);
     newDiv.appendChild(lineBreakTwo);
+    newDiv.appendChild(readStatus);
+    newDiv.appendChild(lineBreakThree);
     newDiv.appendChild(readBtn);
     readBtn.appendChild(readBtnContent);
     newDiv.appendChild(remBtn);
